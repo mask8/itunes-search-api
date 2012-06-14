@@ -45,5 +45,13 @@ describe ITunesSearchAPI do
       result = ITunesSearchAPI.lookup(:id => "284910350")
       result["artistName"].should == "Jack Johnson"
     end
+
+    it "should return the results if the lookup returns results" do
+      stub_request(:get, LOOKUP_URL).with(:query => {:id => "136975", :media => "music", :entity => "song", :limit => 2}).to_return(:body => fixture("lookup-many-result.json"))
+      results = ITunesSearchAPI.lookup(:id => "136975", :media => "music", :entity => "song", :limit => 2)
+      results.length.should == 3
+      results[0]["artistName"].should == "The Beatles"
+      results[1]["trackId"].should == "401187150"
+    end
   end
 end
