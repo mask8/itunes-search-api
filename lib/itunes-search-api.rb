@@ -4,6 +4,7 @@ class ITunesSearchAPI
   include HTTParty
   base_uri 'http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/wa'
   format :json
+  default_timeout 30
 
   class << self
     def search(query={})
